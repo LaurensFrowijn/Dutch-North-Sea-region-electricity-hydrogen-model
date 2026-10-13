@@ -1,17 +1,19 @@
 # Dutch-North-Sea-region-electricity-hydrogen-model
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23343786.svg)](https://doi.org/10.5281/zenodo.23343786)
-
 
 A Calliope-based, hourly electricity-hydrogen capacity expansion model for the Netherlands and North Sea region in 2050. It co-optimizes electricity generation, electrolysis, hydrogen and electricity storage, and transmission investments and operations, incorporating DC power flow, hydrogen linepacking, and alternative energy transition scenarios.
 
 ## Citation
 
-**If you use or cite this model, please cite the accompanying manuscript:**
+If you use this model or its results in your research, please cite the accompanying manuscript:
 
-> Frowijn, L. S. F., Travaglini, R., Lukszo, Z., & Bruninx, K. *The role of electricity and hydrogen network representation in modeling green hydrogen supply chains: a Dutch case study*. Manuscript — **publication details TBD**.
+Frowijn, L. S. F., Travaglini, R., Lukszo, Z., & Bruninx, K. *The role of electricity and hydrogen network representation in modeling green hydrogen supply chains: a Dutch case study*. Manuscript — publication details TBD.
 
-The citation will be updated once the manuscript is published.
+The model source code and input data are archived on Zenodo:
+
+https://doi.org/10.5281/zenodo.23343786
+
+The manuscript citation will be updated upon publication.
 
 The underlying modeling framework should also be acknowledged as [Calliope](https://calliope.readthedocs.io/en/v0.7.0.dev7/).
 
