@@ -71,7 +71,7 @@ Run each configuration from the directory containing its `model.yaml` file. The 
 
 ### Base Ambition (BA)
 
-The `Base Ambition/` directory contains four model configurations that isolate the effects of Dutch onshore electricity network representation (DC power flow) and hydrogen pipeline flexibility (linepacking):
+The `Base_Ambition/` directory contains four model configurations that isolate the effects of Dutch onshore electricity network representation (DC power flow) and hydrogen pipeline flexibility (linepacking):
 
 | Directory | Configuration | Network representation |
 |---|---|---|
@@ -83,7 +83,7 @@ The `Base Ambition/` directory contains four model configurations that isolate t
 For example, to run the **reference** configuration from the repository root:
 
 ```bash
-cd "Base Ambition/0.reference"
+cd "Base_Ambition/0.reference"
 mkdir -p results
 calliope run model.yaml --scenario scenario --save_netcdf results/results.nc
 ```
