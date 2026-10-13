@@ -68,6 +68,7 @@ The `model.yaml` file determines how these changes are applied. Files listed und
 ## Running the model
 
 Run each configuration from the directory containing its `model.yaml` file. The configurations define a scenario named `scenario`, selected through `--scenario scenario`.
+Each model configuration is self-contained, including its own model definitions, mathematical formulations, scenario-specific overrides, and input data. This allows individual configurations to be executed and reproduced independently without modifying file paths.
 
 ### Base Ambition (BA)
 
