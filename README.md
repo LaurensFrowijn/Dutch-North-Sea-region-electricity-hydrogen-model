@@ -1,0 +1,2 @@
+# Dutch-North-Sea-region-electricity-hydrogen-model
+A Calliope-based, hourly electricity-hydrogen capacity expansion model for the Netherlands and North Sea region in 2050. It co-optimizes electricity generation, electrolysis, hydrogen and electricity storage, and transmission investments and operations, incorporating DC power flow, hydrogen linepacking, and alternative energy transition scenarios.
