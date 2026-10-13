@@ -1,0 +1,312 @@
+overrides:
+  policy:
+    # General Dutch ambitions
+    data_definitions:
+      nl_electrolyzer_cap: 4000
+      nl_offshore_wind_cap: 70000
+
+    nodes:
+      # Dutch onshore nodes
+      nl_zuidholland: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv: # Sum of Solar_PV_buildings, Solar_PV_field, and Solar_PV_households
+            flow_cap_min: 17249
+            flow_cap_max: 17249
+          onshore_wind: # Eigen Vermogen distribution
+            flow_cap_min: 1535
+            flow_cap_max: 1535
+          battery: # Sum of all provincial battery flexibility categories
+            flow_cap_max: 6536
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+      nl_noordholland: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 15998
+            flow_cap_max: 15998
+          onshore_wind:
+            flow_cap_min: 1096
+            flow_cap_max: 1096
+          battery:
+            flow_cap_max: 6855
+          h2_storage_onshore:
+            flow_cap_max: 29004
+
+      nl_groningen: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 11094
+            flow_cap_max: 11094
+          onshore_wind:
+            flow_cap_min: 1714
+            flow_cap_max: 1714
+          battery:
+            flow_cap_max: 8294
+          h2_storage_onshore:
+            flow_cap_max: 15227
+
+      nl_zeeland: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 3694
+            flow_cap_max: 3694
+          onshore_wind:
+            flow_cap_min: 666
+            flow_cap_max: 666
+          battery:
+            flow_cap_max: 1819
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+      nl_limburg: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 13651
+            flow_cap_max: 13651
+          onshore_wind:
+            flow_cap_min: 398
+            flow_cap_max: 398
+          battery:
+            flow_cap_max: 6296
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+      nl_utrecht: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 6837
+            flow_cap_max: 6837
+          onshore_wind:
+            flow_cap_min: 281
+            flow_cap_max: 281
+          battery:
+            flow_cap_max: 1695
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+      nl_noordbrabant: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 28242
+            flow_cap_max: 28242
+          onshore_wind:
+            flow_cap_min: 1101
+            flow_cap_max: 1101
+          battery:
+            flow_cap_max: 10329
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+      nl_overijssel: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 10253
+            flow_cap_max: 10253
+          onshore_wind:
+            flow_cap_min: 726
+            flow_cap_max: 726
+          battery:
+            flow_cap_max: 3865
+          h2_storage_onshore:
+            flow_cap_max: 2175
+
+      nl_friesland: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 10680
+            flow_cap_max: 10680
+          onshore_wind:
+            flow_cap_min: 984
+            flow_cap_max: 984
+          battery:
+            flow_cap_max: 5248
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+      nl_drenthe: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 7227
+            flow_cap_max: 7227
+          onshore_wind:
+            flow_cap_min: 398
+            flow_cap_max: 398
+          battery:
+            flow_cap_max: 3950
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+      nl_flevoland: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 6476
+            flow_cap_max: 6476
+          onshore_wind:
+            flow_cap_min: 3572
+            flow_cap_max: 3572
+          battery:
+            flow_cap_max: 5004
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+      nl_gelderland: # Netbeheer Nederland (Eigen Vermogen scenario) 2025
+        techs:
+          solar_pv:
+            flow_cap_min: 21259
+            flow_cap_max: 21259
+          onshore_wind:
+            flow_cap_min: 1335
+            flow_cap_max: 1335
+          battery:
+            flow_cap_max: 8769
+          h2_storage_onshore:
+            flow_cap_max: 0
+
+
+      # Dutch offshore wind
+      nl_offshore_farnw:
+        techs:
+          offshore_wind: # Min. values set as assumption to represent minimal distribution
+            flow_cap_min: 10000
+
+      nl_offshore_nw:
+        techs:
+          offshore_wind: # Min. values set as assumption to represent minimal distribution
+            flow_cap_min: 10000
+
+      nl_offshore_cw:
+        techs:
+          offshore_wind: # Min. values set as assumption to represent minimal distribution
+            flow_cap_min: 10000
+
+      nl_offshore_sw:
+        techs:
+          offshore_wind: # Min. values set as assumption to represent minimal distribution
+            flow_cap_min: 10000
+
+      # 130 TWh theoretical storage TWh https://www.ebn.nl/wp-content/uploads/2022/10/Haalbaarheidsstudie-offshore-ondergrondse-waterstofopslag__EBN_TNO2022_R11212_v07.07.2022-2.pdf
+      nl_offshore_h2_storage_site:
+        techs:
+          h2_storage_offshore:
+            storage_cap_max: 130000000 # MWh = 130 TWh theoretical storage
+
+      # Neighboring countries
+      be_onshore:
+        techs:
+          onshore_wind: # ENTSO-E 2026
+            flow_cap_min: 14000
+            flow_cap_max: 14000
+
+          solar_pv: # ENTSO-E 2026
+            flow_cap_min: 42000
+            flow_cap_max: 42000
+
+          dispatchable_plant: # ENTSO-E 2026 #Combination of low carbon dispatchable sources: Gas turbine with CCS + Hydro + other res, etc.
+            flow_cap_min: 4000
+            flow_cap_max: 4000
+
+
+      be_offshore:
+        techs:
+          offshore_wind: # ENTSO-E 2026
+            flow_cap_min: 8000
+            flow_cap_max: 8000
+
+
+
+      de_north: #Germany divided by one half for North Germany and one half for South Germany
+        techs:
+          onshore_wind: # ENTSO-E 2026
+            flow_cap_min: 79000
+            flow_cap_max: 79000
+
+          solar_pv: # ENTSO-E 2026
+            flow_cap_min: 195000
+            flow_cap_max: 195000
+
+          dispatchable_plant: # ENTSO-E 2026 #Combination of low carbon dispatchable sources: Gas turbine with CCS + Hydro + other res, etc.
+            flow_cap_min: 8000
+            flow_cap_max: 8000
+
+          h2_turbine:
+            flow_cap_min: 26500
+            flow_cap_max: 26500
+
+      de_south:
+        techs:
+          onshore_wind: # ENTSO-E 2026
+            flow_cap_min: 79000
+            flow_cap_max: 79000
+
+          solar_pv: # ENTSO-E 2026
+            flow_cap_min: 195000
+            flow_cap_max: 195000
+
+          dispatchable_plant: # ENTSO-E 2026 #Combination of low carbon dispatchable sources: Gas turbine with CCS + Hydro + other res, etc.
+            flow_cap_min: 8000
+            flow_cap_max: 8000
+
+          h2_turbine:
+            flow_cap_min: 26500
+            flow_cap_max: 26500
+
+      de_offshore:
+        techs:
+          offshore_wind: # ENTSO-E 2026
+            flow_cap_min: 71000
+            flow_cap_max: 71000
+
+
+
+      uk_onshore:
+        techs:
+          onshore_wind: # ENTSO-E 2024
+            flow_cap_min: 40000
+            flow_cap_max: 40000
+
+          solar_pv: # ENTSO-E 2024
+            flow_cap_min: 108000
+            flow_cap_max: 108000
+
+          dispatchable_plant: # ENTSO-E 2026 #Combination of low carbon dispatchable sources: Gas turbine with CCS + Hydro + other res, etc.
+            flow_cap_min: 20000
+            flow_cap_max: 20000
+
+          nuclear:
+            flow_cap_min: 14000
+            flow_cap_max: 14000
+
+          h2_turbine:
+            flow_cap_min: 19000
+            flow_cap_max: 19000
+
+
+      uk_offshore:
+        techs:
+          offshore_wind: # ENTSO-E 2026
+            flow_cap_min: 100000
+            flow_cap_max: 100000
+
+
+      dk_onshore:
+        techs:
+          onshore_wind: # ENTSO-E 2026
+            flow_cap_min: 5000
+            flow_cap_max: 5000
+
+          solar_pv: # ENTSO-E 2026
+            flow_cap_min: 54000
+            flow_cap_max: 54000
+
+          dispatchable_plant: # ENTSO-E 2026 #Combination of low carbon dispatchable sources: Gas turbine with CCS + Hydro + other res, etc.
+            flow_cap_min: 1000
+            flow_cap_max: 1000
+
+
+      dk_offshore:
+        techs:
+          offshore_wind: # ENTSO-E 2026
+            flow_cap_min: 44000
+            flow_cap_max: 44000
+

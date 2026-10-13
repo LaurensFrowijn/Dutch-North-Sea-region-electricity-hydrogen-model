@@ -1,0 +1,94 @@
+dimensions: # DC Power FLow PTDF (van den Bergh et al., 2014)
+  ptdf_links:
+    dtype: string
+    ordered: false
+    iterator: ptdf_link
+
+parameters:
+  ptdf:
+    default: 0
+
+  ptdf_link_cap:
+    default: .inf
+
+  is_ptdf_node:
+    default: 0
+
+  is_electricity_carrier:
+    default: 0
+
+  # 1 = exclude this tech's own electricity flow from the PTDF net-position calculation.to avoid double counting
+  exclude_tech_from_ptdf_net_position:
+    default: 0
+
+
+global_expressions:
+
+  # Gross nodal electricity injection before removing explicit internal AC exchange links.
+  # This includes generation, demand, electrolysis, storage, DC links, etc.
+  ptdf_gross_net_position:
+    foreach: [nodes, timesteps]
+    where: is_ptdf_node==1
+    default: 0
+    equations:
+      - expression: >
+          sum(
+            ((flow_out - flow_in) / timestep_resolution)
+            * is_electricity_carrier,
+            over=[techs, carriers]
+          )
+
+  # ptdf_flow = PTDF * ptdf_net_position
+  ptdf_excluded_net_position_by_tech:
+    foreach: [nodes, techs, timesteps]
+    where: is_ptdf_node==1 AND exclude_tech_from_ptdf_net_position==1
+    default: 0
+    equations:
+      - expression: >
+          sum(
+            ((flow_out - flow_in) / timestep_resolution)
+            * is_electricity_carrier,
+            over=carriers
+          )
+
+  # Net active-power injection vector p_N used in:  p_L = PTDF * p_N
+  ptdf_net_position:
+    foreach: [nodes, timesteps]
+    where: is_ptdf_node==1
+    default: 0
+    equations:
+      - expression: >
+          ptdf_gross_net_position
+          - sum(ptdf_excluded_net_position_by_tech, over=techs)
+
+  # PTDF-based AC line flow:  p_L = PTDF * p_N
+  ptdf_flow:
+    foreach: [ptdf_links, timesteps]
+    default: 0
+    equations:
+      - expression: >
+          sum(ptdf * ptdf_net_position, over=nodes)
+
+
+constraints:
+  # DC power flow requires that the sum of nodal active-power injections equals zero.
+  # Σ_N P_N = 0
+  ptdf_net_position_balance:
+    foreach: [timesteps]
+    equations:
+      - expression: >
+          sum(ptdf_net_position, over=nodes) == 0
+
+  # Upper AC line-flow limit: p_L <= p_L,max
+  ptdf_flow_upper:
+    foreach: [ptdf_links, timesteps]
+    equations:
+      - expression: >
+          ptdf_flow <= ptdf_link_cap
+
+  # Lower AC line-flow limit: p_L >= -p_L,max
+  ptdf_flow_lower:
+    foreach: [ptdf_links, timesteps]
+    equations:
+      - expression: >
+          ptdf_flow >= -1 * ptdf_link_cap

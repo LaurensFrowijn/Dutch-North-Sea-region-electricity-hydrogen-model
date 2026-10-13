@@ -1,0 +1,45 @@
+parameters:
+  is_nl_node:
+    default: 0
+
+  is_electrolyzer_tech:
+    default: 0
+
+  nl_electrolyzer_cap:
+    default: 0
+
+
+global_expressions:
+
+  # Total installed Dutch electrolyzer capacity,
+  # expressed on an H2-output basis.
+  nl_total_electrolyzer_cap:
+    foreach: [nodes, techs, carriers]
+    where: >
+      is_nl_node==1
+      AND is_electrolyzer_tech==1
+      AND carriers==hydrogen
+    equations:
+      - expression: flow_cap
+
+
+constraints:
+
+  # Couple the electricity-input and hydrogen-output capacities
+  # of each electrolyzer through its conversion efficiency.
+  electrolyzer_capacity_coupling:
+    foreach: [nodes, techs]
+    where: "is_electrolyzer_tech==1"
+    equations:
+      - expression: >
+          flow_cap[carriers=hydrogen]
+          == flow_cap[carriers=electricity] * flow_out_eff
+
+  # Minimum Dutch electrolyzer capacity on an H2-output basis.
+  nl_electrolyzer_capacity:
+    equations:
+      - expression: >
+          sum(
+            nl_total_electrolyzer_cap,
+            over=[nodes, techs, carriers]
+          ) == nl_electrolyzer_cap

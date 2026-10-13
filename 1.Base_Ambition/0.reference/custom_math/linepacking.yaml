@@ -1,0 +1,19 @@
+#(Sargent & Sargent, 2025)
+parameters:
+
+  is_hydrogen_linepack:
+    default: 0
+    
+global_expressions:
+  node_total_linepack_link_cap:
+    foreach: [nodes]
+    equations:
+      - expression: "sum(flow_cap * is_hydrogen_linepack, over=[techs, carriers])"
+      
+constraints:
+  link_storage_capacity_proportional:
+    foreach: [nodes, techs]
+    where: "techs==h2_linepacking"
+    equations:
+      - expression: >
+          storage_cap == 0.5 * node_total_linepack_link_cap

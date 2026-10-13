@@ -1,0 +1,90 @@
+
+import:
+  - model_definition/techs.yaml
+  - model_definition/nodes.yaml
+  - model_definition/links.yaml
+  - model_definition/data_definitions.yaml
+  - overrides/policy.yaml
+
+config:
+  init:
+    name: "Dutch North Sea region electricity-hydrogen model"
+    calliope_version: "0.7.0.dev7"
+    distance_unit: km
+    subset:
+      timesteps:
+        - "2050-01-01 00:00:00"
+        - "2050-12-31 23:00:00"
+
+    math_paths:
+      nl_electrolyzer: "custom_math/nl_electrolyzer.yaml"
+      nl_vre_capacity: "custom_math/nl_vre_capacity.yaml"
+      ptdf: "custom_math/ptdf.yaml"
+
+    extra_math:
+      - nl_electrolyzer
+      - nl_vre_capacity
+      - ptdf
+
+    pre_validate_math_strings: true
+
+  build:
+    backend: gurobi
+    ensure_feasibility: false
+
+  solve:
+    save_logs: logs
+    solver: gurobi
+
+scenarios:
+  scenario:
+    - policy
+
+data_tables:
+  ptdf:
+    data: ../../data_tables/ptdf.csv
+    rows: [ptdf_links, nodes, parameters]
+
+  ptdf_link_cap:
+    data: ../../data_tables/ptdf_link_cap.csv
+    rows: [ptdf_links, parameters]
+
+  electricity_demand:
+    data: ../../data_tables/BA/electricity_demand.csv
+    rows: timesteps
+    columns: nodes
+    add_dims:
+      techs: electricity_demand
+      parameters: sink_use_equals
+
+  hydrogen_demand:
+    data: ../../data_tables/BA/hydrogen_demand.csv
+    rows: timesteps
+    columns: nodes
+    add_dims:
+      techs: hydrogen_demand
+      parameters: sink_use_equals
+
+  wind_onshore:
+    data: ../../data_tables/wind_onshore.csv
+    rows: timesteps
+    columns: nodes
+    add_dims:
+      techs: onshore_wind
+      parameters: source_use_max
+
+  wind_offshore:
+    data: ../../data_tables/wind_offshore.csv
+    rows: timesteps
+    columns: nodes
+    add_dims:
+      techs: offshore_wind
+      parameters: source_use_max
+
+  solar_pv:
+    data: ../../data_tables/solar_pv.csv
+    rows: timesteps
+    columns: nodes
+    add_dims:
+      techs: solar_pv
+      parameters: source_use_max

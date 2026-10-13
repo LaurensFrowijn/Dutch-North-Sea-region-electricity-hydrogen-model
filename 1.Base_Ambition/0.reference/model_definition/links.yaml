@@ -1,0 +1,1373 @@
+templates:
+  # Default settings for AC, DC en h2 links
+  ac_onshore_nl: #Existing, so no additional cost included
+    base_tech: transmission
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_out_eff: 1
+    exclude_tech_from_ptdf_net_position: 1 # 1 = to avoid double-counting AC flows
+    cost_flow_cap: #Existing, so no additional cost included
+      data: 0
+      index: monetary
+      dims: costs
+    cost_flow_cap_per_distance:
+      data: 0
+      index: monetary
+      dims: costs
+
+  dc_onshore_investable_nl: #HVDC Cables TYNDP 2024
+    base_tech: transmission
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_out_eff: 0.99 #1% loss for converter station # Travaglini et al. (2025)
+    flow_out_eff_per_distance: 0.9999644 # 3.5% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 40
+    flow_cap_max: 4000
+    cost_flow_cap:
+      data: 250000 # €/MW, #Fixed investment for Onshore HVDC Station TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_cap_per_distance:
+      data: 1618
+      index: monetary
+      dims: costs
+
+  dc_link_investable_to_neighbor: #HVDC Cables TYNDP 2024
+    base_tech: transmission
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_out_eff: 0.99 #1% loss for converter station # Travaglini et al. (2025)
+    flow_out_eff_per_distance: 0.9999644 # 3.5% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 40
+    cost_flow_cap:
+      data: 250000 # €/MW, #Fixed investment for Onshore HVDC Station TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_cap_per_distance:
+      data: 1618
+      index: monetary
+      dims: costs
+
+
+  dc_link_neighbor: #HVDC Cables TYNDP 2024
+    base_tech: transmission
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_out_eff: 0.99 #1% loss for converter station # Travaglini et al. (2025)
+    flow_out_eff_per_distance: 0.9999644 # 3.5% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 40
+    cost_flow_cap:
+      data: 250000 # €/MW, #Fixed investment for Onshore HVDC Station TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_cap_per_distance:
+      data: 1618
+      index: monetary
+      dims: costs
+
+
+  dc_link_landing_nl: #North Sea Wind Power Hub datasets 2024
+    base_tech: transmission
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_out_eff: 0.99 #1% loss for converter station # Travaglini et al. (2025)
+    flow_out_eff_per_distance: 0.9999644 # 3.5% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 40
+    flow_cap_max: 30000
+    cost_flow_cap:
+      data: 543000 # €/MW, #Fixed investment for Ofshore HVDC Station (249000 Eur/MW), DC substation (249000 EUR/MW), and Topsite DC adjustments 45000 EUR/MW) North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+    cost_flow_cap_per_distance:
+      data: 1989 #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  dc_link_offshore_neighbor: #North Sea Wind Power Hub datasets 2024
+    base_tech: transmission
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_out_eff: 0.99 #1% loss for converter station # Travaglini et al. (2025)
+    flow_out_eff_per_distance: 0.9999644 # 3.5% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 40
+    cost_flow_cap:
+      data: 543000 # €/MW, #Fixed investment for Ofshore HVDC Station (249000 Eur/MW), DC substation (249000 EUR/MW), and Topsite DC adjustments 45000 EUR/MW) North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+    cost_flow_cap_per_distance:
+      data: 1989 #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  dc_link_offshore_meshed: #North Sea Wind Power Hub datasets 2024
+    base_tech: transmission
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_out_eff: 0.99 #1% loss for converter station # Travaglini et al. (2025)
+    flow_out_eff_per_distance: 0.9999644 # 3.5% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 40
+    cost_flow_cap:
+      data: 543000 # €/MW, #Fixed investment for Ofshore HVDC Station (249000 Eur/MW), DC substation (249000 EUR/MW), and Topsite DC adjustments 45000 EUR/MW) North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+    cost_flow_cap_per_distance:
+      data: 1989 #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_link_backbone: #Existing, so no additional cost included
+    base_tech: transmission
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    flow_out_eff: 1
+    flow_out_eff_per_distance: 0.9999997 # 0 to 0.03% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 50
+    flow_cap_min: 15000
+    flow_cap_max: 15000
+    is_hydrogen_linepack: 2
+
+  h2_link_backbone_neighbor: #part of the hydrogen backbone
+    base_tech: transmission
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    flow_out_eff: 1
+    flow_out_eff_per_distance: 0.9999997 # 0 to 0.03% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 50
+    flow_cap_min: 0
+    flow_cap_max: 15000
+    cost_flow_cap_per_distance:
+      data: 472 #Infrastructure cost (416 EUR/MWth_LHV/km) including compression cost (56 EUR/MWth_LHV/km) #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_link_onshore_neighbor:
+    base_tech: transmission
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    flow_out_eff: 1
+    flow_out_eff_per_distance: 0.9999997 # 0 to 0.03% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 50
+    cost_flow_cap_per_distance:
+      data: 472 #Infrastructure cost (416 EUR/MWth_LHV/km) including compression cost (56 EUR/MWth_LHV/km) #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_link_landing_nl: #North Sea Wind Power Hub datasets 2024
+    base_tech: transmission
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    flow_out_eff: 1
+    is_hydrogen_linepack: 3
+    flow_out_eff_per_distance: 0.9999997 # 0 to 0.03% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 50
+    flow_cap_max: 30000
+    cost_flow_cap_per_distance:
+      data: 626 #Infrastructure cost (418 EUR/MWth_LHV/km) including compression cost (208 EUR/MWth_LHV/km) #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_link_offshore_meshed: #North Sea Wind Power Hub datasets 2024
+    base_tech: transmission
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    flow_out_eff: 1
+    flow_out_eff_per_distance: 0.9999997 # 0 to 0.03% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 50
+    cost_flow_cap_per_distance:
+      data: 626 #Infrastructure cost (418 EUR/MWth_LHV/km) including compression cost (208 EUR/MWth_LHV/km) #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_link_offshore_neighbor: #North Sea Wind Power Hub datasets 2024
+    base_tech: transmission
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    flow_out_eff: 1
+    flow_out_eff_per_distance: 0.9999997 # 0 to 0.03% loss per 1000 km # Travaglini et al. (2025)
+    lifetime: 50
+    cost_flow_cap_per_distance:
+      data: 626 #Infrastructure cost (418 EUR/MWth_LHV/km) including compression cost (208 EUR/MWth_LHV/km) #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+techs:
+  # PTDF representation of onshore AC network 380 kV-equivalent links between provinces.
+  # ptdf_link_001 | nl_limburg -> nl_noordbrabant
+  ac_onshore_nl_limburg_noordbrabant:
+    template: ac_onshore_nl
+    link_from: nl_limburg
+    link_to: nl_noordbrabant
+    flow_cap_min: 0
+
+  # ptdf_link_002 | nl_drenthe -> nl_overijssel
+  ac_onshore_nl_drenthe_overijssel:
+    template: ac_onshore_nl
+    link_from: nl_drenthe
+    link_to: nl_overijssel
+    flow_cap_min: 0
+
+  # ptdf_link_003 | nl_overijssel -> nl_gelderland
+  ac_onshore_nl_overijssel_gelderland:
+    template: ac_onshore_nl
+    link_from: nl_overijssel
+    link_to: nl_gelderland
+    flow_cap_min: 0
+
+  # ptdf_link_004 | nl_overijssel -> nl_flevoland
+  ac_onshore_nl_overijssel_flevoland:
+    template: ac_onshore_nl
+    link_from: nl_overijssel
+    link_to: nl_flevoland
+    flow_cap_min: 0
+
+  # ptdf_link_005 | nl_friesland -> nl_flevoland
+  ac_onshore_nl_friesland_flevoland:
+    template: ac_onshore_nl
+    link_from: nl_friesland
+    link_to: nl_flevoland
+    flow_cap_min: 0
+
+  # ptdf_link_006 | nl_noordbrabant -> nl_zeeland
+  ac_onshore_nl_noordbrabant_zeeland:
+    template: ac_onshore_nl
+    link_from: nl_noordbrabant
+    link_to: nl_zeeland
+    flow_cap_min: 0
+
+  # ptdf_link_007 | nl_utrecht -> nl_noordholland
+  ac_onshore_nl_utrecht_noordholland:
+    template: ac_onshore_nl
+    link_from: nl_utrecht
+    link_to: nl_noordholland
+    flow_cap_min: 0
+
+  # ptdf_link_008 | nl_flevoland -> nl_noordholland
+  ac_onshore_nl_flevoland_noordholland:
+    template: ac_onshore_nl
+    link_from: nl_flevoland
+    link_to: nl_noordholland
+    flow_cap_min: 0
+
+  # ptdf_link_009 | nl_drenthe -> nl_groningen
+  ac_onshore_nl_drenthe_groningen:
+    template: ac_onshore_nl
+    link_from: nl_drenthe
+    link_to: nl_groningen
+    flow_cap_min: 0
+
+  # ptdf_link_010 | nl_overijssel -> nl_groningen
+  ac_onshore_nl_overijssel_groningen:
+    template: ac_onshore_nl
+    link_from: nl_overijssel
+    link_to: nl_groningen
+    flow_cap_min: 0
+
+  # ptdf_link_011 | nl_friesland -> nl_groningen
+  ac_onshore_nl_friesland_groningen:
+    template: ac_onshore_nl
+    link_from: nl_friesland
+    link_to: nl_groningen
+    flow_cap_min: 0
+
+  # ptdf_link_012 | nl_noordbrabant -> nl_zuidholland
+  ac_onshore_nl_noordbrabant_zuidholland:
+    template: ac_onshore_nl
+    link_from: nl_noordbrabant
+    link_to: nl_zuidholland
+    flow_cap_min: 0
+
+  # ptdf_link_013 | nl_utrecht -> nl_zuidholland
+  ac_onshore_nl_utrecht_zuidholland:
+    template: ac_onshore_nl
+    link_from: nl_utrecht
+    link_to: nl_zuidholland
+    flow_cap_min: 0
+
+  # ptdf_link_014 | nl_noordholland -> nl_zuidholland
+  ac_onshore_nl_noordholland_zuidholland:
+    template: ac_onshore_nl
+    link_from: nl_noordholland
+    link_to: nl_zuidholland
+    flow_cap_min: 0
+
+#investable onshore HVDC
+  dc_investable_nl_groningen_drenthe:
+    template: dc_onshore_investable_nl
+    link_from: nl_groningen
+    link_to: nl_drenthe
+    distance: 70
+    cost_om_annual:
+      data: 2800 # 40 EUR/MW/km/a * 70 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_groningen_friesland:
+    template: dc_onshore_investable_nl
+    link_from: nl_groningen
+    link_to: nl_friesland
+    distance: 90
+    cost_om_annual:
+      data: 3600 # 40 EUR/MW/km/a * 90 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_friesland_drenthe:
+    template: dc_onshore_investable_nl
+    link_from: nl_friesland
+    link_to: nl_drenthe
+    distance: 60
+    cost_om_annual:
+      data: 2400 # 40 EUR/MW/km/a * 60 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_friesland_flevoland:
+    template: dc_onshore_investable_nl
+    link_from: nl_friesland
+    link_to: nl_flevoland
+    distance: 90
+    cost_om_annual:
+      data: 3600 # 40 EUR/MW/km/a * 90 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_friesland_noordholland:
+    template: dc_onshore_investable_nl
+    link_from: nl_friesland
+    link_to: nl_noordholland
+    distance: 110
+    cost_om_annual:
+      data: 4400 # 40 EUR/MW/km/a * 110 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_drenthe_overijssel:
+    template: dc_onshore_investable_nl
+    link_from: nl_drenthe
+    link_to: nl_overijssel
+    distance: 80
+    cost_om_annual:
+      data: 3200 # 40 EUR/MW/km/a * 80 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_overijssel_gelderland:
+    template: dc_onshore_investable_nl
+    link_from: nl_overijssel
+    link_to: nl_gelderland
+    distance: 80
+    cost_om_annual:
+      data: 3200 # 40 EUR/MW/km/a * 80 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_overijssel_flevoland:
+    template: dc_onshore_investable_nl
+    link_from: nl_overijssel
+    link_to: nl_flevoland
+    distance: 90
+    cost_om_annual:
+      data: 3600 # 40 EUR/MW/km/a * 90 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_flevoland_gelderland:
+    template: dc_onshore_investable_nl
+    link_from: nl_flevoland
+    link_to: nl_gelderland
+    distance: 60
+    cost_om_annual:
+      data: 2400 # 40 EUR/MW/km/a * 60 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_flevoland_utrecht:
+    template: dc_onshore_investable_nl
+    link_from: nl_flevoland
+    link_to: nl_utrecht
+    distance: 50
+    cost_om_annual:
+      data: 2000 # 40 EUR/MW/km/a * 50 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_flevoland_noordholland:
+    template: dc_onshore_investable_nl
+    link_from: nl_flevoland
+    link_to: nl_noordholland
+    distance: 70
+    cost_om_annual:
+      data: 2800 # 40 EUR/MW/km/a * 70 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_noordholland_utrecht:
+    template: dc_onshore_investable_nl
+    link_from: nl_noordholland
+    link_to: nl_utrecht
+    distance: 70
+    cost_om_annual:
+      data: 2800 # 40 EUR/MW/km/a * 70 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_noordholland_zuidholland:
+    template: dc_onshore_investable_nl
+    link_from: nl_noordholland
+    link_to: nl_zuidholland
+    distance: 70
+    cost_om_annual:
+      data: 2800 # 40 EUR/MW/km/a * 70 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_utrecht_zuidholland:
+    template: dc_onshore_investable_nl
+    link_from: nl_utrecht
+    link_to: nl_zuidholland
+    distance: 60
+    cost_om_annual:
+      data: 2400 # 40 EUR/MW/km/a * 60 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_utrecht_gelderland:
+    template: dc_onshore_investable_nl
+    link_from: nl_utrecht
+    link_to: nl_gelderland
+    distance: 60
+    cost_om_annual:
+      data: 2400 # 40 EUR/MW/km/a * 60 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_utrecht_noordbrabant:
+    template: dc_onshore_investable_nl
+    link_from: nl_utrecht
+    link_to: nl_noordbrabant
+    distance: 70
+    cost_om_annual:
+      data: 2800 # 40 EUR/MW/km/a * 70 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_gelderland_noordbrabant:
+    template: dc_onshore_investable_nl
+    link_from: nl_gelderland
+    link_to: nl_noordbrabant
+    distance: 90
+    cost_om_annual:
+      data: 3600 # 40 EUR/MW/km/a * 90 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_noordbrabant_zuidholland:
+    template: dc_onshore_investable_nl
+    link_from: nl_noordbrabant
+    link_to: nl_zuidholland
+    distance: 80
+    cost_om_annual:
+      data: 3200 # 40 EUR/MW/km/a * 80 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_zuidholland_zeeland:
+    template: dc_onshore_investable_nl
+    link_from: nl_zuidholland
+    link_to: nl_zeeland
+    distance: 80
+    cost_om_annual:
+      data: 3200 # 40 EUR/MW/km/a * 80 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_noordbrabant_zeeland:
+    template: dc_onshore_investable_nl
+    link_from: nl_noordbrabant
+    link_to: nl_zeeland
+    distance: 100
+    cost_om_annual:
+      data: 4000 # 40 EUR/MW/km/a * 100 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_investable_nl_limburg_noordbrabant:
+    template: dc_onshore_investable_nl
+    link_from: nl_limburg
+    link_to: nl_noordbrabant
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+
+  # cross-border DC: NL to neighboring countries
+  dc_nl_zeeland_be_onshore:
+    template: dc_link_investable_to_neighbor
+    link_from: nl_zeeland
+    link_to: be_onshore
+    distance: 80
+    cost_om_annual:
+      data: 3200 # 40 EUR/MW/km/a * 80 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_noordbrabant_be_onshore:
+    template: dc_link_investable_to_neighbor
+    link_from: nl_noordbrabant
+    link_to: be_onshore
+    distance: 70
+    cost_om_annual:
+      data: 2800 # 40 EUR/MW/km/a * 70 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_limburg_be_onshore:
+    template: dc_link_investable_to_neighbor
+    link_from: nl_limburg
+    link_to: be_onshore
+    distance: 100
+    cost_om_annual:
+      data: 4000 # 40 EUR/MW/km/a * 100 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_groningen_de_north:
+    template: dc_link_investable_to_neighbor
+    link_from: nl_groningen
+    link_to: de_north
+    distance: 150
+    cost_om_annual:
+      data: 6000 # 40 EUR/MW/km/a * 150 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_drenthe_de_north:
+    template: dc_link_investable_to_neighbor
+    link_from: nl_drenthe
+    link_to: de_north
+    distance: 140
+    cost_om_annual:
+      data: 5600 # 40 EUR/MW/km/a * 140 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_overijssel_de_north:
+    template: dc_link_investable_to_neighbor
+    link_from: nl_overijssel
+    link_to: de_north
+    distance: 160
+    cost_om_annual:
+      data: 6400 # 40 EUR/MW/km/a * 160 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_gelderland_de_south:
+    template: dc_link_investable_to_neighbor
+    link_from: nl_gelderland
+    link_to: de_south
+    distance: 100
+    cost_om_annual:
+      data: 4000 # 40 EUR/MW/km/a * 100 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_limburg_de_south:
+    template: dc_link_investable_to_neighbor
+    link_from: nl_limburg
+    link_to: de_south
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_zuidholland_uk_onshore:
+    template: dc_link_offshore_neighbor
+    link_from: nl_zuidholland
+    link_to: uk_onshore
+    distance: 250
+    cost_om_annual:
+      data: 10000 # 40 EUR/MW/km/a * 250 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+
+  dc_nl_groningen_dk_onshore:
+    template: dc_link_offshore_neighbor
+    link_from: nl_groningen
+    link_to: dk_onshore
+    distance: 450
+    cost_om_annual:
+      data: 18000 # 40 EUR/MW/km/a * 450 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+
+  # offshore DC landings to NL shore
+  dc_nl_offshore_sw_nl_zeeland:
+    template: dc_link_landing_nl
+    link_from: nl_offshore_sw
+    link_to: nl_zeeland
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_cw_nl_zuidholland:
+    template: dc_link_landing_nl
+    link_from: nl_offshore_cw
+    link_to: nl_zuidholland
+    distance: 110
+    cost_om_annual:
+      data: 4400 # 40 EUR/MW/km/a * 110 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_nw_nl_noordholland:
+    template: dc_link_landing_nl
+    link_from: nl_offshore_nw
+    link_to: nl_noordholland
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_farnw_nl_groningen:
+    template: dc_link_landing_nl
+    link_from: nl_offshore_farnw
+    link_to: nl_groningen
+    distance: 220
+    cost_om_annual:
+      data: 8800 # 40 EUR/MW/km/a * 220 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+
+  # foreign offshore DC landings
+  dc_be_offshore_be_onshore:
+    template: dc_link_offshore_neighbor
+    link_from: be_offshore
+    link_to: be_onshore
+    distance: 80
+    cost_om_annual:
+      data: 3200 # 40 EUR/MW/km/a * 80 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  dc_uk_offshore_uk_onshore:
+    template: dc_link_offshore_neighbor
+    link_from: uk_offshore
+    link_to: uk_onshore
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  dc_de_offshore_de_north:
+    template: dc_link_offshore_neighbor
+    link_from: de_offshore
+    link_to: de_north
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  dc_dk_offshore_dk_onshore:
+    template: dc_link_offshore_neighbor
+    link_from: dk_offshore
+    link_to: dk_onshore
+    distance: 100
+    cost_om_annual:
+      data: 4000 # 40 EUR/MW/km/a * 100 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+
+  # investable offshore DC mesh
+  dc_nl_offshore_sw_nl_offshore_cw:
+    template: dc_link_offshore_meshed
+    link_from: nl_offshore_sw
+    link_to: nl_offshore_cw
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_cw_nl_offshore_nw:
+    template: dc_link_offshore_meshed
+    link_from: nl_offshore_cw
+    link_to: nl_offshore_nw
+    distance: 130
+    cost_om_annual:
+      data: 5200 # 40 EUR/MW/km/a * 130 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_nw_nl_offshore_farnw:
+    template: dc_link_offshore_meshed
+    link_from: nl_offshore_nw
+    link_to: nl_offshore_farnw
+    distance: 180
+    cost_om_annual:
+      data: 7200 # 40 EUR/MW/km/a * 180 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  # investable international offshore DC mesh
+  dc_be_offshore_nl_offshore_sw:
+    template: dc_link_offshore_meshed
+    link_from: be_offshore
+    link_to: nl_offshore_sw
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_sw_uk_offshore:
+    template: dc_link_offshore_meshed
+    link_from: nl_offshore_sw
+    link_to: uk_offshore
+    distance: 180
+    cost_om_annual:
+      data: 7200 # 40 EUR/MW/km/a * 180 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_uk_offshore_nl_offshore_cw:
+    template: dc_link_offshore_meshed
+    link_from: uk_offshore
+    link_to: nl_offshore_cw
+    distance: 200
+    cost_om_annual:
+      data: 8000 # 40 EUR/MW/km/a * 200 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_nw_dk_offshore:
+    template: dc_link_offshore_meshed
+    link_from: nl_offshore_nw
+    link_to: dk_offshore
+    distance: 250
+    cost_om_annual:
+      data: 10000 # 40 EUR/MW/km/a * 250 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_dk_offshore_nl_offshore_farnw:
+    template: dc_link_offshore_meshed
+    link_from: dk_offshore
+    link_to: nl_offshore_farnw
+    distance: 250
+    cost_om_annual:
+      data: 10000 # 40 EUR/MW/km/a * 250 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_nw_de_offshore:
+    template: dc_link_offshore_meshed
+    link_from: nl_offshore_nw
+    link_to: de_offshore
+    distance: 250
+    cost_om_annual:
+      data: 10000 # 40 EUR/MW/km/a * 250 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  dc_nl_offshore_farnw_de_offshore:
+    template: dc_link_offshore_meshed
+    link_from: nl_offshore_farnw
+    link_to: de_offshore
+    distance: 200
+    cost_om_annual:
+      data: 8000 # 40 EUR/MW/km/a * 200 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  # investable offshore H2 mesh
+  h2_nl_offshore_sw_nl_offshore_cw:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_sw
+    link_to: nl_offshore_cw
+    distance: 120
+    cost_om_annual:
+      data: 1248 # 10.4 EUR/MW_LHV/km/a * 120 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_offshore_cw_nl_offshore_nw:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_cw
+    link_to: nl_offshore_nw
+    distance: 130
+    cost_om_annual:
+      data: 1352 #10.4 EUR/MW_LHV/km/a * 130 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_offshore_nw_nl_offshore_farnw:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_nw
+    link_to: nl_offshore_farnw
+    distance: 180
+    cost_om_annual:
+      data: 1872 # 10.4 EUR/MW_LHV/km/a * 180 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  # Connection to offshore H2 storage
+  h2_nl_offshore_nw_nl_offshore_h2_storage_site:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_nw
+    link_to: nl_offshore_h2_storage_site
+    distance: 90
+    cost_om_annual:
+      data: 936 # 10.4 EUR/MW_LHV/km/a * 90 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_offshore_h2_storage_site_nl_groningen:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_h2_storage_site
+    link_to: nl_groningen
+    distance: 150
+    cost_om_annual:
+      data: 1560 # 10.4 EUR/MW_LHV/km/a * 150 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  # NL onshore H2 backbone
+  h2_nl_zeeland_nl_zuidholland:
+    template: h2_link_backbone
+    link_from: nl_zeeland
+    link_to: nl_zuidholland
+    distance: 80
+    cost_om_annual:
+      data: 464 # 5.8 EUR/MW_LHV/km/a * 80 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_zuidholland_nl_noordholland:
+    template: h2_link_backbone
+    link_from: nl_zuidholland
+    link_to: nl_noordholland
+    distance: 70
+    cost_om_annual:
+      data: 406 # 5.8 EUR/MW_LHV/km/a * 70 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_noordholland_nl_groningen:
+    template: h2_link_backbone
+    link_from: nl_noordholland
+    link_to: nl_groningen
+    distance: 180
+    cost_om_annual:
+      data: 1044 # 5.8 EUR/MW_LHV/km/a * 180 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_groningen_nl_drenthe:
+    template: h2_link_backbone
+    link_from: nl_groningen
+    link_to: nl_drenthe
+    distance: 70
+    cost_om_annual:
+      data: 406 # 5.8 EUR/MW_LHV/km/a * 70 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_drenthe_nl_overijssel:
+    template: h2_link_backbone
+    link_from: nl_drenthe
+    link_to: nl_overijssel
+    distance: 80
+    cost_om_annual:
+      data: 464 # 5.8 EUR/MW_LHV/km/a * 80 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_nl_overijssel_nl_gelderland:
+    template: h2_link_backbone
+    link_from: nl_overijssel
+    link_to: nl_gelderland
+    distance: 80
+    cost_om_annual:
+      data: 464 # 5.8 EUR/MW_LHV/km/a * 80 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_limburg_nl_gelderland:
+    template: h2_link_backbone
+    link_from: nl_limburg
+    link_to: nl_gelderland
+    distance: 120
+    cost_om_annual:
+      data: 696 # 5.8 EUR/MW/km/a * 120 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_zeeland_nl_limburg:
+    template: h2_link_backbone
+    link_from: nl_zeeland
+    link_to: nl_limburg
+    distance: 190
+    cost_om_annual:
+      data: 1102 # 5.8 EUR/MW/km/a * 190 km, including compression # North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+
+  # investable offshore H2 landings
+  h2_nl_offshore_sw_nl_zeeland:
+    template: h2_link_landing_nl
+    link_from: nl_offshore_sw
+    link_to: nl_zeeland
+    distance: 120
+    cost_om_annual:
+      data: 1248 # 10.4 EUR/MW_LHV/km/a * 120 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_offshore_cw_nl_zuidholland:
+    template: h2_link_landing_nl
+    link_from: nl_offshore_cw
+    link_to: nl_zuidholland
+    distance: 110
+    cost_om_annual:
+      data: 1144 # 10.4 EUR/MW_LHV/km/a * 110 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_offshore_nw_nl_noordholland:
+    template: h2_link_landing_nl
+    link_from: nl_offshore_nw
+    link_to: nl_noordholland
+    distance: 120
+    cost_om_annual:
+      data: 1248 # 10.4 EUR/MW_LHV/km/a * 120 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_offshore_farnw_nl_groningen:
+    template: h2_link_landing_nl
+    link_from: nl_offshore_farnw
+    link_to: nl_groningen
+    distance: 220
+    cost_om_annual:
+      data: 2288 # 10.4 EUR/MW_LHV/km/a * 220 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  # investable cross-border H2 links
+  h2_nl_zeeland_be_onshore:
+    template: h2_link_backbone_neighbor
+    link_from: nl_zeeland
+    link_to: be_onshore
+    distance: 80
+    cost_om_annual:
+      data: 464 # 5.8 EUR/MW_LHV/km/a * 80 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_noordbrabant_be_onshore:
+    template: h2_link_backbone_neighbor
+    link_from: nl_noordbrabant
+    link_to: be_onshore
+    distance: 70
+    cost_om_annual:
+      data: 406 # 5.8 EUR/MW_LHV/km/a * 70 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_limburg_be_onshore:
+    template: h2_link_backbone_neighbor
+    link_from: nl_limburg
+    link_to: be_onshore
+    distance: 100
+    cost_om_annual:
+      data: 580 # 5.8 EUR/MW_LHV/km/a * 100 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_gelderland_de_south:
+    template: h2_link_backbone_neighbor
+    link_from: nl_gelderland
+    link_to: de_south
+    distance: 100
+    cost_om_annual:
+      data: 580 # 5.8 EUR/MW_LHV/km/a * 100 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_overijssel_de_north:
+    template: h2_link_backbone_neighbor
+    link_from: nl_overijssel
+    link_to: de_north
+    distance: 160
+    cost_om_annual:
+      data: 928 # 5.8 EUR/MW_LHV/km/a * 160 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_nl_groningen_de_north:
+    template: h2_link_backbone_neighbor
+    link_from: nl_groningen
+    link_to: de_north
+    distance: 150
+    cost_om_annual:
+      data: 870 # 5.8 EUR/MW_LHV/km/a * 150 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+#investable
+  h2_nl_zuidholland_uk_onshore:
+    template: h2_link_offshore_meshed
+    link_from: nl_zuidholland
+    link_to: uk_onshore
+    distance: 250
+    cost_om_annual:
+      data: 2600 # 10.4 EUR/MW_LHV/km/a * 250 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_nl_groningen_dk_onshore:
+    template: h2_link_offshore_meshed
+    link_from: nl_groningen
+    link_to: dk_onshore
+    distance: 450
+    cost_om_annual:
+      data: 4680 # 10.4 EUR/MW_LHV/km/a * 450 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_offshore_nw_de_offshore:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_nw
+    link_to: de_offshore
+    distance: 250
+    cost_om_annual:
+      data: 2600 # 10.4 EUR/MW_LHV/km/a * 250 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_nl_offshore_farnw_de_offshore:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_farnw
+    link_to: de_offshore
+    distance: 200
+    cost_om_annual:
+      data: 2080 # 10.4 EUR/MW_LHV/km/a * 200 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  # investable foreign offshore H2 landings
+  h2_be_offshore_be_onshore:
+    template: h2_link_offshore_neighbor
+    link_from: be_offshore
+    link_to: be_onshore
+    distance: 80
+    cost_om_annual:
+      data: 832 # 10.4 EUR/MW_LHV/km/a * 80 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_uk_offshore_uk_onshore:
+    template: h2_link_offshore_neighbor
+    link_from: uk_offshore
+    link_to: uk_onshore
+    distance: 120
+    cost_om_annual:
+      data:  1248 # 10.4 EUR/MW_LHV/km/a * 120 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_de_offshore_de_north:
+    template: h2_link_offshore_neighbor
+    link_from: de_offshore
+    link_to: de_north
+    distance: 120
+    cost_om_annual:
+      data: 1248 # 10.4 EUR/MW_LHV/km/a * 120 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_dk_offshore_dk_onshore:
+    template: h2_link_offshore_neighbor
+    link_from: dk_offshore
+    link_to: dk_onshore
+    distance: 100
+    cost_om_annual:
+      data: 1040 # 10.4 EUR/MW_LHV/km/a * 100 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  # investable offshore H2 mesh
+  h2_be_offshore_nl_offshore_sw:
+    template: h2_link_offshore_meshed
+    link_from: be_offshore
+    link_to: nl_offshore_sw
+    distance: 120
+    cost_om_annual:
+      data: 1248 # 10.4 EUR/MW_LHV/km/a * 120 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_nl_offshore_sw_uk_offshore:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_sw
+    link_to: uk_offshore
+    distance: 180
+    cost_om_annual:
+      data: 1872 # 10.4 EUR/MW_LHV/km/a * 180 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_uk_offshore_nl_offshore_cw:
+    template: h2_link_offshore_meshed
+    link_from: uk_offshore
+    link_to: nl_offshore_cw
+    distance: 200
+    cost_om_annual:
+      data: 2080 # 10.4 EUR/MW_LHV/km/a * 200 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_nl_offshore_nw_dk_offshore:
+    template: h2_link_offshore_meshed
+    link_from: nl_offshore_nw
+    link_to: dk_offshore
+    distance: 250
+    cost_om_annual:
+      data: 2600 # 10.4 EUR/MW_LHV/km/a * 250 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_dk_offshore_nl_offshore_farnw:
+    template: h2_link_offshore_meshed
+    link_from: dk_offshore
+    link_to: nl_offshore_farnw
+    distance: 250
+    cost_om_annual:
+      data: 2600 # 10.4 EUR/MW_LHV/km/a * 250 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  # neighbour onshore DC links
+  dc_de_north_de_south:
+    template: dc_link_neighbor
+    link_from: de_north
+    link_to: de_south
+    distance: 500
+    cost_om_annual:
+      data: 20000 # 40 EUR/MW/km/a * 500 km, TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  dc_uk_onshore_be_onshore:
+    template: dc_link_offshore_neighbor
+    link_from: uk_onshore
+    link_to: be_onshore
+    distance: 180
+    cost_om_annual:
+      data: 7200 # 40 EUR/MW/km/a * 180 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_be_onshore_de_south:
+    template: dc_link_neighbor
+    link_from: be_onshore
+    link_to: de_south
+    distance: 120
+    cost_om_annual:
+      data: 4800 # 40 EUR/MW/km/a * 120 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_de_north_dk_onshore:
+    template: dc_link_neighbor
+    link_from: de_north
+    link_to: dk_onshore
+    distance: 200
+    cost_om_annual:
+      data: 8000 # 40 EUR/MW/km/a * 200 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+  dc_uk_onshore_dk_onshore:
+    template: dc_link_offshore_neighbor
+    link_from: uk_onshore
+    link_to: dk_onshore
+    distance: 765
+    cost_om_annual:
+      data: 30600 # 40 EUR/MW/km/a * 765 km, TYNDP 2024
+      index: monetary
+      dims: costs
+  # neighbor offshore DC links
+  dc_uk_offshore_be_offshore:
+    template: dc_link_offshore_neighbor
+    link_from: uk_offshore
+    link_to: be_offshore
+    distance: 200
+    cost_om_annual:
+      data: 8000 # 40 EUR/MW/km/a * 200 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+
+  dc_de_offshore_dk_offshore:
+    template: dc_link_offshore_neighbor
+    link_from: de_offshore
+    link_to: dk_offshore
+    distance: 250
+    cost_om_annual:
+      data: 10000 # 40 EUR/MW/km/a * 250 km, TYNDP 2024
+      index: monetary
+      dims: costs
+
+
+  # neighbor H2 links
+  h2_de_north_de_south:
+    template: h2_link_onshore_neighbor
+    link_from: de_north
+    link_to: de_south
+    distance: 500
+    cost_om_annual:
+      data: 2900 # 5.8 EUR/MW_LHV/km/a * 500 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+  h2_uk_onshore_be_onshore:
+    template: h2_link_offshore_neighbor
+    link_from: uk_onshore
+    link_to: be_onshore
+    distance: 180
+    cost_om_annual:
+      data: 1872 # 10.4 EUR/MW_LHV/km/a * 180 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_be_onshore_de_south:
+    template: h2_link_onshore_neighbor
+    link_from: be_onshore
+    link_to: de_south
+    distance: 120
+    cost_om_annual:
+      data: 696 # 5.8 EUR/MW_LHV/km/a * 120 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_de_north_dk_onshore:
+    template: h2_link_onshore_neighbor
+    link_from: de_north
+    link_to: dk_onshore
+    distance: 200
+    cost_om_annual:
+      data: 1160 # 5.8 EUR/MW_LHV/km/a * 200 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  h2_uk_onshore_dk_onshore:
+    template: h2_link_offshore_neighbor
+    link_from: uk_onshore
+    link_to: dk_onshore
+    distance: 765
+    cost_om_annual:
+      data: 7956 # 10.4 EUR/MW_LHV/km/a * 765 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+  # neighbor offshore H2 links
+  h2_uk_offshore_be_offshore:
+    template: h2_link_offshore_neighbor
+    link_from: uk_offshore
+    link_to: be_offshore
+    distance: 200
+    cost_om_annual:
+      data: 2080 # 10.4 EUR/MW_LHV/km/a * 200 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+
+
+  h2_de_offshore_dk_offshore:
+    template: h2_link_offshore_neighbor
+    link_from: de_offshore
+    link_to: dk_offshore
+    distance: 250
+    cost_om_annual:
+      data: 2600 # 10.4 EUR/MW_LHV/km/a * 250 km, including compression #North Sea Wind Power Hub datasets 2024
+      index: monetary
+      dims: costs
+

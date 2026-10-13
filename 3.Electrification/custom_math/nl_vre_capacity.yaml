@@ -1,0 +1,23 @@
+parameters:
+  is_nl_offshore_vre_node:
+    default: 0
+
+  is_offshore_wind_tech:
+    default: 0
+
+  nl_offshore_wind_cap:
+    default: 0
+
+
+global_expressions:
+  nl_total_offshore_wind_cap:
+    foreach: [nodes, techs, carriers]
+    where: "is_nl_offshore_vre_node==1 AND is_offshore_wind_tech==1 AND carriers==electricity"
+    equations:
+      - expression: flow_cap
+
+
+constraints:
+  nl_offshore_wind_capacity:
+    equations:
+      - expression: sum(nl_total_offshore_wind_cap, over=[nodes, techs, carriers]) == nl_offshore_wind_cap

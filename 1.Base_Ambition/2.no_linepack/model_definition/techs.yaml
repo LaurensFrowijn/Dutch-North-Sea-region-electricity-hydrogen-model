@@ -1,0 +1,351 @@
+templates:
+  monetary_defaults:
+    cost_interest_rate:
+      data: 0.08
+      index: monetary
+      dims: costs
+
+# Cost data based on TYNDP 2024 & North Sea Wind Power Hub 2024 (or specifically mentioned at the tech)
+techs:
+
+  # VRE
+  onshore_wind: #Onshore TYNDP 2024
+    template: monetary_defaults
+    base_tech: supply
+    carrier_out: electricity
+    source_unit: per_cap
+    source_cap_equals_flow_cap: true
+    lifetime: 30
+    cost_flow_cap:
+      data: 970000
+      index: monetary
+      dims: costs
+    cost_om_annual:
+      data: 11340
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+
+  offshore_wind: #Hub connected Wind Offshore Fixed TYNDP 2024
+    template: monetary_defaults
+    base_tech: supply
+    carrier_out: electricity
+    source_unit: per_cap
+    source_cap_equals_flow_cap: true
+    lifetime: 30 #Assumed, not mentioned in dataset
+    cost_flow_cap:
+      data: 1880000
+      index: monetary
+      dims: costs
+    cost_om_annual:
+      data: 56000
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+
+  solar_pv: # Utility-scale PV TYNDP 2024
+    template: monetary_defaults
+    base_tech: supply
+    carrier_out: electricity
+    source_unit: per_cap
+    source_cap_equals_flow_cap: true
+    lifetime: 40
+    cost_flow_cap:
+      data: 290000
+      index: monetary
+      dims: costs
+    cost_om_annual:
+      data: 7400
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+
+  # NL demand
+  electricity_demand:
+    base_tech: demand
+    carrier_in: electricity
+
+  hydrogen_demand:
+    base_tech: demand
+    carrier_in: hydrogen
+
+
+  # Electrolysis
+  electrolyzer_onshore: # Onshore electrolysis TYNDP 2024
+    template: monetary_defaults
+    base_tech: conversion
+    carrier_in: electricity
+    carrier_out: hydrogen
+    flow_out_eff: 0.79 #North Sea Wind Power Hub 2024
+    lifetime: 30
+    cost_flow_cap:
+      data: 325000
+      index: [[monetary, electricity]]
+      dims: [costs, carriers]
+    cost_om_annual:
+      data: 10500
+      index: [[monetary, electricity]]
+      dims: [costs, carriers]
+    cost_flow_in:
+      data: 0
+      index: monetary
+      dims: costs
+
+  electrolyzer_offshore: # Offshore electrolysis TYNDP 2024
+    template: monetary_defaults
+    base_tech: conversion
+    carrier_in: electricity
+    carrier_out: hydrogen
+    flow_out_eff: 0.79 #North Sea Wind Power Hub 2024
+    lifetime: 30
+    cost_flow_cap:
+      data: 630000
+      index: [[monetary, electricity]]
+      dims: [costs, carriers]
+    cost_om_annual:
+      data: 14000
+      index: [[monetary, electricity]]
+      dims: [costs, carriers]
+    cost_flow_in:
+      data: 0
+      index: monetary
+      dims: costs
+
+
+  # Hydrogen-to-electricity conversion
+  h2_turbine: # H2-based gas turbine # HyStories 2022
+    template: monetary_defaults
+    base_tech: conversion
+    carrier_in: hydrogen
+    carrier_out: electricity
+    flow_out_eff: 0.4
+    lifetime: 25
+    cost_flow_cap:
+      data: 380000 # €/MW
+      index: [[monetary, electricity]]
+      dims: [costs, carriers]
+    cost_om_annual:
+      data: 11400 #     # 3% of CAPEX: 0.03 * 380000 = 11400 €/MW/year
+      index: [[monetary, electricity]]
+      dims: [costs, carriers]
+    # Variable cost
+    cost_flow_out:
+      data: 2.10 # €/MWh electricity output, variable non-fuel cost
+      index: monetary
+      dims: costs
+
+
+  # Electricity storage
+  battery: # Utility-Scale Battery Storage - 4Hr TYNDP 2024
+    template: monetary_defaults
+    base_tech: storage
+    carrier_in: electricity
+    carrier_out: electricity
+    storage_initial: 0
+    flow_cap_per_storage_cap_max: 0.25
+    flow_cap_per_storage_cap_min: 0.25
+    #roundtrip efficiency of 83-90%
+    flow_in_eff: 0.94 #Root of 88% roundtrip efficiency # NREL (2025) https://doi.org/10.2172/2583471
+    flow_out_eff: 0.94 #Root of 88% roundtrip efficiency # NREL (2025) https://doi.org/10.2172/2583471
+    lifetime: 30 #TYNDP 2024
+    cost_flow_cap:
+      data: 537562 #TYNDP 2024
+      index: monetary
+      dims: costs
+    cost_om_annual:
+      data: 13439 #TYNDP 2024
+      index: monetary
+      dims: costs
+    cyclic_storage: false
+
+
+  # Offshore hydrogen storage
+  h2_storage_offshore: # Underground H2 storage in porous media # HyStories 2022
+    template: monetary_defaults
+    base_tech: storage
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    # HyStories porous media: volume over flow rate ratio = 800 MWh/MW.
+    flow_cap_per_storage_cap_max: 0.00125 #1/800 MWh/MW
+    flow_in_eff: 1 # HyStories
+    flow_out_eff: 0.97 # HyStories
+    lifetime: 30 # HyStories
+    cost_storage_cap:
+      data: 350 # €/MWh, HyStories: 0.35 €/kWh
+      index: monetary
+      dims: costs
+    cost_flow_cap:
+      data: 1060000 # €/MW, HyStories: 1060 €/kW
+      index: monetary
+      dims: costs
+    # HyStories fixed O&M: 4% of flow CAPEX and 2% of storage CAPEX
+    cost_om_annual:
+      data: 21200
+      index: monetary
+      dims: costs
+    cost_om_annual_investment_fraction:
+      data: 0.02
+      index: monetary
+      dims: costs
+    cost_flow_in:
+      data: 1.86 # €/MWh HyStories
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 2.67 # €/MWh HyStories
+      index: monetary
+      dims: costs
+    cyclic_storage: true
+
+
+  h2_storage_onshore: # Underground H2 storage in salt cavern# HyStories 2022
+    template: monetary_defaults
+    base_tech: storage
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    # HyStories salt cavern: volume over flow rate ratio = 268 MWh/MW.
+    flow_cap_per_storage_cap_max: 0.00373134328358208955223880597015 #1/268 MWh/MW
+    flow_in_eff: 1 # HyStories
+    flow_out_eff: 1 # HyStories
+    lifetime: 30 # HyStories
+    cost_storage_cap:
+      data: 550 # €/MWh, HyStories: 0.55 €/kWh
+      index: monetary
+      dims: costs
+    cost_flow_cap:
+      data: 260000 # €/MW, HyStories: 260 €/kW
+      index: monetary
+      dims: costs
+    # HyStories fixed O&M: 3.8% of flow CAPEX and 0.5% of storage CAPEX
+    cost_om_annual:
+      data: 8580
+      index: monetary
+      dims: costs
+    cost_om_annual_investment_fraction:
+      data: 0.005
+      index: monetary
+      dims: costs
+    cost_flow_in:
+      data: 2.37 # €/MWh HyStories
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0.66 # €/MWh HyStories
+      index: monetary
+      dims: costs
+    cyclic_storage: true
+
+
+  # Hydrogen storage
+  h2_compressed_storage: # Above-ground pressurized H2 storage
+    template: monetary_defaults
+    base_tech: storage
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    storage_initial: 0
+    #volume over flow rate ratio 48 MWh/MW
+    flow_cap_per_storage_cap_min: 0.0208333 #HyStories, 1 / 48 MWh/MW
+    flow_in_eff: 1 #HyStories
+    flow_out_eff: 1 #HyStories
+    lifetime: 30 #HyStories
+    cost_storage_cap:
+      data: 10000  #10 €/kWh  #HyStories,
+      index: monetary
+      dims: costs
+    cost_flow_cap:
+      data: 458000  # 458 €/kW #HyStories,
+      index: monetary
+      dims: costs
+    # HyStories fixed O&M: 1% of flow and storage CAPEX
+    cost_om_annual_investment_fraction:
+      data: 0.01
+      index: monetary
+      dims: costs
+    cost_flow_in:
+      data: 1.20 #HyStories
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0 #HyStories
+      index: monetary
+      dims: costs
+    cyclic_storage: true
+
+
+  # Linepacking
+  h2_linepacking:
+    template: monetary_defaults
+    base_tech: storage
+    carrier_in: hydrogen
+    carrier_out: hydrogen
+    storage_loss: 0
+    flow_in_eff: 0.9 # Otsubo, 2025
+    flow_out_eff: 1 # Otsubo, 2025
+    lifetime: 50
+    cost_storage_cap: {data: 0, index: monetary, dims: costs}
+    cost_flow_cap: {data: 0, index: monetary, dims: costs}
+    cost_om_annual: {data: 0, index: monetary, dims: costs}
+    cost_flow_in:
+      data: 0
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0
+      index: monetary
+      dims: costs
+
+
+  dispatchable_plant: #Low/low-CO2 dispatchable generation; CAPEX/O&M based on Gas turbine, combined cycle - extraction - natural gas - large TYNDP 2024
+    template: monetary_defaults
+    base_tech: supply
+    carrier_out: electricity
+    source_unit: per_cap
+    source_cap_equals_flow_cap: true
+    source_use_max: 1
+    lifetime: 25
+    cost_flow_cap:
+      data: 800000
+      index: monetary
+      dims: costs
+    cost_om_annual:
+      data: 26000
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 100 #Assumption
+      index: monetary
+      dims: costs
+
+  nuclear: # Nuclear PWR
+    template: monetary_defaults
+    base_tech: supply
+    carrier_out: electricity
+    source_unit: per_cap
+    source_cap_equals_flow_cap: true
+    source_use_max: 1
+    flow_out_min_relative: 0.5 #Assumption; modern reactors can load-follow between 50-100% rated power
+    lifetime: 60 #2050 PWR, Danish Energy Agency
+    cost_flow_cap:
+      data: 6800000 # €/MW, 2050 PWR, Danish Energy Agency
+      index: monetary
+      dims: costs
+    cost_om_annual:
+      data: 113000 # €/MW/year, 2050 PWR, Danish Energy Agency
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 7.6 # €/MWh electricity output: 2.2 variable O&M + 5.4 nuclear fuel
+      index: monetary
+      dims: costs

@@ -1,0 +1,192 @@
+templates:
+  depleted_gas_field:
+    techs:
+      h2_storage_offshore:
+
+  nl_onshore_cluster:
+    techs:
+      electricity_demand:
+      hydrogen_demand:
+      onshore_wind:
+      solar_pv:
+      electrolyzer_onshore:
+      h2_turbine:
+      battery:
+      h2_compressed_storage:
+      h2_linepacking:
+
+
+  nl_onshore_provinces:
+    techs:
+      electricity_demand:
+      onshore_wind:
+      solar_pv:
+      battery:
+
+  nl_offshore_hub:
+    techs:
+      offshore_wind:
+      electrolyzer_offshore:
+      h2_linepacking:
+
+  neighbour_onshore:
+    techs:
+      electricity_demand:
+      hydrogen_demand:
+      onshore_wind:
+      solar_pv:
+      electrolyzer_onshore:
+      h2_turbine:
+      battery:
+      h2_compressed_storage:
+      dispatchable_plant:
+      h2_storage_onshore:
+
+
+  neighbour_offshore:
+    techs:
+      offshore_wind:
+      electrolyzer_offshore:
+
+
+
+
+nodes:
+  nl_zuidholland:
+    template: nl_onshore_cluster
+    latitude: 52.00
+    longitude: 4.49
+
+  nl_noordholland:
+    template: nl_onshore_cluster
+    latitude: 52.60
+    longitude: 4.85
+
+  nl_groningen:
+    template: nl_onshore_cluster
+    latitude: 53.22
+    longitude: 6.75
+
+  nl_zeeland:
+    template: nl_onshore_cluster
+    latitude: 51.50
+    longitude: 3.85
+
+  nl_limburg:
+    template: nl_onshore_cluster
+    latitude: 51.20
+    longitude: 5.93
+
+  nl_utrecht:
+    template: nl_onshore_provinces
+    latitude: 52.09
+    longitude: 5.16
+
+  nl_noordbrabant:
+    template: nl_onshore_provinces
+    latitude: 51.56
+    longitude: 5.08
+
+  nl_overijssel:
+    template: nl_onshore_cluster
+    latitude: 52.45
+    longitude: 6.45
+    techs:
+      h2_linepacking: { }
+
+  nl_friesland:
+    template: nl_onshore_provinces
+    latitude: 53.15
+    longitude: 5.78
+
+  nl_drenthe:
+    template: nl_onshore_cluster
+    latitude: 52.90
+    longitude: 6.55
+    techs:
+      h2_linepacking: { }
+
+  nl_flevoland:
+    template: nl_onshore_provinces
+    latitude: 52.52
+    longitude: 5.55
+
+  nl_gelderland:
+    template: nl_onshore_cluster
+    latitude: 52.05
+    longitude: 5.90
+    techs:
+      h2_linepacking: { }
+
+#offshore
+  nl_offshore_h2_storage_site:
+    template: depleted_gas_field
+    latitude: 54.00
+    longitude: 5.50
+
+  nl_offshore_farnw:
+    template: nl_offshore_hub
+    latitude: 54.20
+    longitude: 4.10
+
+  nl_offshore_nw:
+    template: nl_offshore_hub
+    latitude: 53.70
+    longitude: 4.35
+
+  nl_offshore_cw:
+    template: nl_offshore_hub
+    latitude: 52.85
+    longitude: 4.05
+
+  nl_offshore_sw:
+    template: nl_offshore_hub
+    latitude: 52.05
+    longitude: 3.45
+
+#neightbour countries
+  be_onshore:
+    template: neighbour_onshore
+    latitude: 50.85
+    longitude: 4.35
+
+  be_offshore:
+    template: neighbour_offshore
+    latitude: 51.55
+    longitude: 2.85
+
+  de_north:
+    template: neighbour_onshore
+    latitude: 53.10
+    longitude: 9.80
+
+  de_south:
+    template: neighbour_onshore
+    latitude: 50.35
+    longitude: 9.20
+
+  de_offshore:
+    template: neighbour_offshore
+    latitude: 54.50
+    longitude: 7.10
+
+  uk_onshore:
+    template: neighbour_onshore
+    latitude: 53.20
+    longitude: -1.40
+
+  uk_offshore:
+    template: neighbour_offshore
+    latitude: 54.10
+    longitude: 1.00
+
+
+  dk_onshore:
+    template: neighbour_onshore
+    latitude: 56.20
+    longitude: 9.50
+
+  dk_offshore:
+    template: neighbour_offshore
+    latitude: 56.00
+    longitude: 7.20

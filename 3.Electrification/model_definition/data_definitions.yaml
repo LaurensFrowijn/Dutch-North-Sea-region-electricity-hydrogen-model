@@ -1,0 +1,97 @@
+data_definitions:
+#for vre in NL
+  is_nl_offshore_vre_node:
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+           1, 1, 1, 1,
+           0,
+           0, 0, 0, 0, 0, 0, 0, 0, 0]
+    index:
+      - nl_zuidholland
+      - nl_noordholland
+      - nl_groningen
+      - nl_zeeland
+      - nl_limburg
+      - nl_utrecht
+      - nl_noordbrabant
+      - nl_overijssel
+      - nl_friesland
+      - nl_drenthe
+      - nl_flevoland
+      - nl_gelderland
+      - nl_offshore_farnw
+      - nl_offshore_nw
+      - nl_offshore_cw
+      - nl_offshore_sw
+      - nl_offshore_h2_storage_site
+      - be_onshore
+      - be_offshore
+      - de_north
+      - de_south
+      - de_offshore
+      - uk_onshore
+      - uk_offshore
+      - dk_onshore
+      - dk_offshore
+    dims: nodes
+
+  is_solar_pv_tech:
+    data: [1]
+    index: [solar_pv]
+    dims: techs
+
+  is_onshore_wind_tech:
+    data: [1]
+    index: [onshore_wind]
+    dims: techs
+
+  is_offshore_wind_tech:
+    data: [1]
+    index: [offshore_wind]
+    dims: techs
+
+  nl_solar_pv_cap: 0
+  nl_onshore_wind_cap: 0
+  nl_offshore_wind_cap: 0
+
+#PTDF at Dutch onshore grid
+  is_ptdf_node:
+    data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+           0, 0, 0, 0,
+           0,
+           0, 0, 0, 0, 0, 0, 0, 0, 0]
+    index:
+      - nl_zuidholland
+      - nl_noordholland
+      - nl_groningen
+      - nl_zeeland
+      - nl_limburg
+      - nl_utrecht
+      - nl_noordbrabant
+      - nl_overijssel
+      - nl_friesland
+      - nl_drenthe
+      - nl_flevoland
+      - nl_gelderland
+      - nl_offshore_farnw
+      - nl_offshore_nw
+      - nl_offshore_cw
+      - nl_offshore_sw
+      - nl_offshore_h2_storage_site
+      - be_onshore
+      - be_offshore
+      - de_north
+      - de_south
+      - de_offshore
+      - uk_onshore
+      - uk_offshore
+      - dk_onshore
+      - dk_offshore
+    dims: nodes
+
+  is_electricity_carrier:
+    data: [1, 0]
+    index:
+      - electricity
+      - hydrogen
+    dims: carriers
+
