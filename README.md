@@ -45,7 +45,7 @@ For framework-specific installation guidance, consult the [Calliope 0.7.0.dev7 d
 
 ## Model structure
 
-Each model configuration is defined through a `model.yaml` file and associated YAML and CSV files. The principal components are:
+Each model configuration has its own `model.yaml` and associated YAML files, while input CSV files are stored centrally in the repository-level `data_tables/` directory. The principal components are:
 
 | File or directory | Description |
 |---|---|
@@ -53,9 +53,39 @@ Each model configuration is defined through a `model.yaml` file and associated Y
 | `model_definition/` | Technology, node, link, and other model data definitions. |
 | `overrides/` | Scenario-specific assumptions and policy constraints. |
 | `custom_math/` | Additional mathematical formulations used to extend or override Calliope's standard model mathematics. |
-| `data_tables/` | Hourly demand and renewable availability data and electricity network parameters. |
+| `data_tables/` (repository root) | Shared renewable availability profiles and electricity network data, plus scenario-specific electricity and hydrogen demand profiles. |
 
-Paths are resolved relative to the relevant model configuration. Different runs may use different custom mathematical formulations.
+The repository is organised as follows:
+
+```text
+1.Base_Ambition/
+  0.reference/
+  1.no_both/
+  2.no_linepack/
+  3.no_DCPF/
+2.Hydrogen_Oriented/
+3.Electrification/
+data_tables/
+  BA/
+    electricity_demand.csv
+    hydrogen_demand.csv
+  HO/
+    electricity_demand.csv
+    hydrogen_demand.csv
+  EL/
+    electricity_demand.csv
+    hydrogen_demand.csv
+  ptdf.csv
+  ptdf_link_cap.csv
+  ptdf_link_lookup.csv
+  solar_pv.csv
+  wind_onshore.csv
+  wind_offshore.csv
+README.md
+LICENSE
+```
+
+Each scenario or run directory contains its own `model.yaml`, `model_definition/`, `custom_math/`, and `overrides/` files as applicable. The `model.yaml` files refer to the central data directory using relative paths (`../../data_tables/` for the BA configurations and `../data_tables/` for HO and EL). Different runs may use different custom mathematical formulations.
 
 ## Scenario-specific overrides
 
@@ -67,12 +97,11 @@ The `model.yaml` file determines how these changes are applied. Files listed und
 
 ## Running the model
 
-Run each configuration from the directory containing its `model.yaml` file. The configurations define a scenario named `scenario`, selected through `--scenario scenario`.
-Each model configuration is self-contained, including its own model definitions, mathematical formulations, scenario-specific overrides, and input data. This allows individual configurations to be executed and reproduced independently without modifying file paths.
+Run each configuration from the directory containing its `model.yaml` file. The configurations define a scenario named `scenario`, selected through `--scenario scenario`. Each configuration retains its own model definitions, mathematical formulations, and scenario-specific overrides, but uses the centrally stored CSV input files. Run the model from within the complete repository so the relative paths to `data_tables/` remain valid.
 
 ### Base Ambition (BA)
 
-The `Base_Ambition/` directory contains four model configurations that isolate the effects of Dutch onshore electricity network representation (DC power flow) and hydrogen pipeline flexibility (linepacking):
+The `1.Base_Ambition/` directory contains four model configurations that isolate the effects of Dutch onshore electricity network representation (DC power flow) and hydrogen pipeline flexibility (linepacking):
 
 | Directory | Configuration | Network representation |
 |---|---|---|
@@ -84,7 +113,7 @@ The `Base_Ambition/` directory contains four model configurations that isolate t
 For example, to run the **reference** configuration from the repository root:
 
 ```bash
-cd "Base_Ambition/0.reference"
+cd "1.Base_Ambition/0.reference"
 mkdir -p results
 calliope run model.yaml --scenario scenario --save_netcdf results/results.nc
 ```
@@ -95,7 +124,7 @@ For the other BA configurations, navigate to the corresponding directory (`1.no_
 
 The Hydrogen-Oriented and Electrification scenarios examine alternative electricity and hydrogen demand pathways and infrastructure investment assumptions. Both include DC power flow and hydrogen linepacking.
 
-From the directory containing the relevant scenario's `model.yaml` file, run:
+Navigate from the repository root to `2.Hydrogen_Oriented/` or `3.Electrification/`, respectively, and run:
 
 ```bash
 mkdir -p results
@@ -104,16 +133,19 @@ calliope run model.yaml --scenario scenario --save_netcdf results/results.nc
 
 The `results/` directory must exist before saving the output. The NetCDF filename may be changed to distinguish runs.
 
-**Computational requirements:** Each run optimises a full year with 8,760 hourly timesteps and can require substantial memory and computation time. Users can adapt solver options to their computing environment. Solver settings may be adjusted according to the user's computational environment. Results may differ slightly depending on solver versions, numerical tolerances, and computational settings.
+**Computational requirements:** Each run optimises a full year with 8,760 hourly timesteps and can require substantial memory and computation time. Users may adapt solver settings to their computational environment. Results may differ slightly depending on solver versions, numerical tolerances, and computational settings.
 
 ## Input data
 
-The `data_tables/` directory contains the following input files:
+The repository-level `data_tables/` directory stores inputs shared across runs. Electricity and hydrogen demand profiles differ between the three energy transition scenarios and are therefore stored separately in `BA/`, `HO/`, and `EL/`. All four Base Ambition network-representation runs use the same BA demand files.
+
+The files are organised as follows:
 
 | File | Description |
 |---|---|
-| `electricity_demand.csv` | Hourly electricity demand by model node. |
-| `hydrogen_demand.csv` | Hourly hydrogen demand by model node. |
+| `BA/electricity_demand.csv`, `BA/hydrogen_demand.csv` | Hourly electricity and hydrogen demand for the Base Ambition scenario (all four network configurations). |
+| `HO/electricity_demand.csv`, `HO/hydrogen_demand.csv` | Hourly electricity and hydrogen demand for the Hydrogen-Oriented scenario. |
+| `EL/electricity_demand.csv`, `EL/hydrogen_demand.csv` | Hourly electricity and hydrogen demand for the Electrification scenario. |
 | `solar_pv.csv` | Hourly solar photovoltaic availability profiles. |
 | `wind_onshore.csv` | Hourly onshore wind availability profiles. |
 | `wind_offshore.csv` | Hourly offshore wind availability profiles. |
@@ -121,11 +153,11 @@ The `data_tables/` directory contains the following input files:
 | `ptdf_link_cap.csv` | Transmission capacity limits for the links represented in the PTDF formulation. |
 | `ptdf_link_lookup.csv` | Supporting lookup information connecting PTDF link identifiers to the underlying electricity network connections and parameters. |
 
+The common wind, solar, and PTDF datasets are referenced by the individual `model.yaml` files rather than duplicated in each run directory. For example, from `1.Base_Ambition/0.reference/model.yaml`, the BA electricity demand is loaded from `../../data_tables/BA/electricity_demand.csv`; from `2.Hydrogen_Oriented/model.yaml`, the HO demand is loaded from `../data_tables/HO/electricity_demand.csv`. The PTDF input tables are only loaded for runs that include DC power flow.
+
 ### Data sources and processing
 
-Dutch scenario assumptions for 2050, including provincial electricity and hydrogen demand and renewable generation capacity assumptions, are based on **Netbeheer Nederland, *Netbeheer Nederland Scenario’s Editie 2025***. For Belgium, Germany, Denmark, and the United Kingdom, demand and renewable capacity projections are based on the **ENTSO-E TYNDP 2026 National Trends+ scenario**, as described in the accompanying manuscript.
-
-
+Dutch scenario assumptions for 2050, including provincial electricity and hydrogen demand and renewable generation capacity assumptions, are based on **Netbeheer Nederland, *Netbeheer Nederland Scenario’s Editie 2025***. For Belgium, Germany, Denmark, and the United Kingdom, demand and renewable capacity projections are based on the **ENTSO-E TYNDP 2026 National Trends+ scenario**, as described in the accompanying manuscript. Annual demand projections are converted into hourly profiles using `oemof-demand`, as described in the manuscript.
 
 ### Dutch onshore electricity network (PTDF)
 
